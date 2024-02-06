@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">KotlinSample</string>
+
+
+    <!-- Main Activity -->
+    <string name="activity_main_title">Equativ Kotlin Sample</string>
+    <string name="title_activity_main_short">SAS Sample</string>
+    <string-array name="activity_main_implementations_array">
+        <item>Banner</item>
+        <item>Banner in list</item>
+        <item>Interstitial</item>
+    </string-array>
+    <string name="activity_main_headerText">CHOOSE A SAMPLE:</string>
+    <string name="activity_main_footerText">This sample demonstrates how to implement the Equativ Display SDK in Android applications.</string>
+
+    <!-- Banner Activity -->
+    <string name="activity_banner_title">Banner integration</string>
+    <string name="activity_banner_refresh_btn">Reload banner</string>
+    <string name="activity_banner_instructions">Simple banner integration. See implementation in BannerActivity.</string>
+
+    <!-- Banner in list Activity -->
+    <string name="activity_banner_in_list_title">Banner in list integration</string>
+    <string name="activity_banner_in_list_header_title">↓ SCROLL TO SEE THE AD ↓</string>
+    <string name="activity_banner_in_list_header_instructions">Banner integration in RecyclerView. See implementation in BannerActivity.</string>
+
+    <!-- Interstitial Activity -->
+    <string name="activity_interstitial_title">Interstitial integration</string>
+    <string name="activity_interstitial_load_btn">Load interstitial</string>
+    <string name="activity_interstitial_show_btn">Show interstitial</string>
+    <string name="activity_interstitial_instructions">Simple interstitial integration. Click the load button to load an interstitial ad, then click the show button to display it. See implementation in InterstitialActivity.</string>
+
+    <!-- Content filler -->
+    <string name="lorem_ipsum_title">Lorem ipsum dolor sit amet</string>
+    <string name="lorem_ipsum_content">Phasellus in tellus eget arcu volutpat bibendum vulputate ac sapien. Vivamus enim elit, gravida vel consequat sit amet, scelerisque vitae ex.</string>
+
+</resources>
