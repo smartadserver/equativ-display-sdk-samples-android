@@ -2,9 +2,9 @@
 
 This repository contains sample applications demonstrating how to integrate the various ad formats provided by the _Equativ Display SDK_ on Android.
 
-Those samples are dedicated to the new _Equativ Display SDK **v8.0**_.
+Those samples are dedicated to the new _Equativ Display SDK **v8.1**_.
 
-Please note that the _Equativ Display SDK **v8.0**_ is a total overhaul of the _Smart Display SDK **v7.x**_, and its feature set is not full yet.
+Please note that the _Equativ Display SDK **v8.x**_ is a total overhaul of the _Smart Display SDK **v7.x**_, and its feature set is not full yet.
 
 ## Requirements
 

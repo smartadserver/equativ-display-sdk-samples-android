@@ -53,15 +53,16 @@ class MainActivity : AppCompatActivity() {
         )
 
         binding.listView.setOnItemClickListener { _, _, index, _ ->
-            val activityClass = when (index) {
+            when (index) {
+                1 -> BannerActivity::class
                 2 -> BannerInListActivity::class
                 3 -> InterstitialActivity::class
-                else -> BannerActivity::class
+                else -> null
+            }?.let { activityClass ->
+                val intent = Intent(this, activityClass.java)
+
+                startActivity(intent)
             }
-
-            val intent = Intent(this, activityClass.java)
-
-            startActivity(intent)
         }
     }
 }

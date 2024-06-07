@@ -14,7 +14,7 @@ object Constants {
             const val SITE_ID: Long = 104808
             const val PAGE_ID: Long = 663262
             const val FORMAT_ID: Long = 15140
-            const val KEYWORD_TARGETING_STRING: String = "sdk8"
+            const val KEYWORD_TARGETING_STRING: String = "sdk8-parallax-video"
         }
 
         object Interstitial {

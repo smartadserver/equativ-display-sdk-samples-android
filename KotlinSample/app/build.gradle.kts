@@ -45,7 +45,7 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 
     // sdk8 main dependency
-    implementation("com.equativ.android:equativ-display-sdk:8.0.0")
+    implementation("com.equativ.android:equativ-display-sdk:8.1.0")
 
     // Following dependencies should be removed once Equativ Display SDK is retrieve from packagecloud
     implementation("com.squareup.okhttp3:okhttp:4.9.0")

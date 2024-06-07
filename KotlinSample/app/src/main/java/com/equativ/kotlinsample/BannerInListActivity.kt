@@ -15,6 +15,7 @@ import com.equativ.displaysdk.ad.banner.SASBannerView
 import com.equativ.displaysdk.exception.SASException
 import com.equativ.displaysdk.model.SASAdInfo
 import com.equativ.displaysdk.model.SASAdPlacement
+import com.equativ.displaysdk.model.SASParallaxMargins
 import com.equativ.kotlinsample.databinding.BannerInListActivityBinding
 import com.equativ.kotlinsample.databinding.ListBannerHolderBinding
 import com.equativ.kotlinsample.databinding.ListItemBinding
@@ -94,6 +95,12 @@ class BannerInListActivity : AppCompatActivity(), SASBannerView.BannerListener  
         // Define LayoutParam to the SASBannerView
         bannerView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0)
 
+        // In this integration, the placement used is a parallax placement.
+        // To properly setup parallax, please check if you need to add margin to the SASBannerView to avoid having the parallax
+        // ad being rendered below any UI element, such as the navBar for instance.
+
+        // bannerView.parallaxMargins = SASParallaxMargins(LEFT_MARGIN, TOP_MARGIN, RIGHT_MARGIN, BOTTOM_MARGIN)
+
         loadBanner()
     }
 
@@ -117,6 +124,11 @@ class BannerInListActivity : AppCompatActivity(), SASBannerView.BannerListener  
         // You can also use a test placement during development (a placement that will always
         // deliver an ad from a chosen format).
 
+        // You can test other parallax placements by using
+        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_PARALLAX_HTML
+        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_PARALLAX_VIDEO
+
+        // Or any other banner format test placements:
         // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_HTML
         // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_MRAID_EXPAND
         // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_VIDEO
@@ -155,6 +167,10 @@ class BannerInListActivity : AppCompatActivity(), SASBannerView.BannerListener  
 
         // Updating the banner aspect ratio
         updateBannerHeight()
+    }
+
+    override fun onBannerAdRequestClose() {
+        Log.i(TAG, "Banner ad request close.")
     }
 
     override fun onBannerAdFailedToLoad(exception: SASException) {

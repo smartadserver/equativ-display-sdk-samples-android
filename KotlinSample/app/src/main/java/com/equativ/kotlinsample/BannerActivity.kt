@@ -99,6 +99,10 @@ class BannerActivity : AppCompatActivity(), SASBannerView.BannerListener {
         updateBannerHeight()
     }
 
+    override fun onBannerAdRequestClose() {
+        Log.i(TAG, "Banner ad request close")
+    }
+
     override fun onBannerAdFailedToLoad(exception: SASException) {
         Log.i(TAG, "Banner ad failed to load with exception: $exception")
 
