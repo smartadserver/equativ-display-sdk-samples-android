@@ -117,6 +117,14 @@ class BannerActivity : AppCompatActivity(), SASBannerView.BannerListener {
         Log.i(TAG, "Banner ad was clicked")
     }
 
+    override fun onBannerAdCollapsed() {
+        Log.i(TAG, "Banner ad was collapsed")
+    }
+
+    override fun onBannerAdExpanded() {
+        Log.i(TAG, "Banner ad was expanded")
+    }
+
     companion object {
         private const val TAG = "BannerActivity"
     }

@@ -38,16 +38,13 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("androidx.core:core-ktx:1.13.1")
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
 
     // sdk8 main dependency
-    implementation("com.equativ.android:equativ-display-sdk:8.1.0")
+    implementation("com.equativ.android:equativ-display-sdk:8.2.0")
 
-    // Following dependencies should be removed once Equativ Display SDK is retrieve from packagecloud
-    implementation("com.squareup.okhttp3:okhttp:4.9.0")
-    implementation("androidx.preference:preference:1.1.1")
 }
