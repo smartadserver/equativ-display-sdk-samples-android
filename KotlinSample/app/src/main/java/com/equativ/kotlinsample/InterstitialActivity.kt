@@ -114,6 +114,20 @@ class InterstitialActivity : AppCompatActivity(), SASInterstitialManager.Interst
     override fun onInterstitialAdClicked() {
         Log.i(TAG, "Interstitial ad was clicked")
     }
+
+    override fun onInterstitialAdAudioStart() {
+        Log.i(TAG, "Interstitial video ad will start to play audio")
+
+        // Equativ Display SDK is notifying your app that it will play audio.
+        // You could optionally pause music depending on your apps design.
+    }
+
+    override fun onInterstitialAdAudioStop() {
+        Log.i(TAG, "Interstitial video ad did stop to play audio")
+
+        // Equativ Display SDK is notifying your app that it has stopped playing audio.
+        // Depending on your apps design, you could resume music here.
+    }
     
 
     companion object {

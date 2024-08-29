@@ -125,6 +125,20 @@ class BannerActivity : AppCompatActivity(), SASBannerView.BannerListener {
         Log.i(TAG, "Banner ad was expanded")
     }
 
+    override fun onBannerAdAudioStart() {
+        Log.i(TAG, "Banner video ad will start to play audio")
+
+        // Equativ Display SDK is notifying your app that it will play audio.
+        // You could optionally pause music depending on your apps design.
+    }
+
+    override fun onBannerAdAudioStop() {
+        Log.i(TAG, "Banner video ad did stop to play audio")
+
+        // Equativ Display SDK is notifying your app that it has stopped playing audio.
+        // Depending on your apps design, you could resume music here.
+    }
+
     companion object {
         private const val TAG = "BannerActivity"
     }
