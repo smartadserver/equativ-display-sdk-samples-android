@@ -2,11 +2,12 @@ package com.equativ.kotlinsample.viewholder
 
 import android.view.Gravity
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.equativ.kotlinsample.R
 import com.equativ.kotlinsample.databinding.ListItemBinding
 
-class ListItemViewHolder(private val binding: ListItemBinding) : ViewHolder(binding.root) {
+class ListItemViewHolder(private val binding: ListItemBinding, @StringRes private val headerTextId: Int) : ViewHolder(binding.root) {
 
     fun setIndex(index: Int) {
         binding.indexTextView.text = index.toString()
@@ -18,7 +19,7 @@ class ListItemViewHolder(private val binding: ListItemBinding) : ViewHolder(bind
             binding.titleTextView.text = binding.root.context.resources.getString(R.string.activity_banner_in_list_header_title)
             binding.titleTextView.gravity = Gravity.CENTER
 
-            binding.contentTextView.text = binding.root.context.resources.getString(R.string.activity_banner_in_list_header_instructions)
+            binding.contentTextView.text = binding.root.context.resources.getString(headerTextId)
         } else {
             binding.indexTextView.visibility = View.VISIBLE
 

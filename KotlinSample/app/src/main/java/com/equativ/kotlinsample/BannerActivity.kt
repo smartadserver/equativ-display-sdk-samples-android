@@ -2,6 +2,8 @@ package com.equativ.kotlinsample
 
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup.LayoutParams
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.equativ.displaysdk.ad.banner.SASBannerView
 import com.equativ.displaysdk.exception.SASException
@@ -23,6 +25,7 @@ class BannerActivity : AppCompatActivity(), SASBannerView.BannerListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(binding.root)
 
         // Setup load button
@@ -31,7 +34,9 @@ class BannerActivity : AppCompatActivity(), SASBannerView.BannerListener {
         }
 
         // Set a global layout listener on the root view to always resize the banner view when the layout is updated
-        binding.root.viewTreeObserver.addOnGlobalLayoutListener { updateBannerHeight() }
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener {
+            updateBannerHeight()
+        }
 
         // Set the banner listener to the SASBannerView
         bannerView.bannerListener = this
@@ -63,6 +68,12 @@ class BannerActivity : AppCompatActivity(), SASBannerView.BannerListener {
         // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_MRAID_EXPAND
         // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_VIDEO
 
+        // Note that, starting with the Equativ Display SDK 8.3.0, you can also load native-ad insertions
+        // through the SASBannerView. Try it by using our native-ad test placements:
+
+        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_NATIVE_AD_ICON
+        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_NATIVE_AD_ICON_AND_COVER
+
         // If you are an inventory reseller, you must provide a Supply Chain Object.
         // More info here: https://help.smartadserver.com/s/article/Sellers-json-and-SupplyChain-Object
         // adPlacement.supplyChainObjectString = "1.0,1!exchange1.com,1234,1,publisher,publisher.com"
@@ -76,7 +87,12 @@ class BannerActivity : AppCompatActivity(), SASBannerView.BannerListener {
         // aspect ratio in this case. We recommend '320/50' for a standard banner.
         val aspectRatio = currentBannerAspectRatio ?: (350.0 / 50.0)
 
-        val height = if (aspectRatio != 0.0) {
+        // Note: If the SASAdInfo.aspectRatio stored in currentBannerAspectRatio is -2, that means we
+        // recommend you to use the WRAP_CONTENT facilities of Android.
+
+        val height = if (aspectRatio < 0.0) {
+            LayoutParams.WRAP_CONTENT
+        } else if (aspectRatio > 0.0) {
             (resources.displayMetrics.widthPixels / aspectRatio).toInt()
         } else {
             0

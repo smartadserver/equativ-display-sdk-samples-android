@@ -1,12 +1,17 @@
 package com.equativ.kotlinsample
 
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.view.ViewGroup.LayoutParams
+import android.view.WindowInsets
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,16 +20,15 @@ import com.equativ.displaysdk.ad.banner.SASBannerView
 import com.equativ.displaysdk.exception.SASException
 import com.equativ.displaysdk.model.SASAdInfo
 import com.equativ.displaysdk.model.SASAdPlacement
-import com.equativ.displaysdk.model.SASParallaxMargins
-import com.equativ.kotlinsample.databinding.BannerInListActivityBinding
-import com.equativ.kotlinsample.databinding.ListBannerHolderBinding
+import com.equativ.kotlinsample.databinding.AdInListActivityBinding
+import com.equativ.kotlinsample.databinding.ListAdHolderBinding
 import com.equativ.kotlinsample.databinding.ListItemBinding
-import com.equativ.kotlinsample.viewholder.BannerViewHolder
+import com.equativ.kotlinsample.viewholder.AdViewHolder
 import com.equativ.kotlinsample.viewholder.ListItemViewHolder
 
 class BannerInListActivity : AppCompatActivity(), SASBannerView.BannerListener  {
 
-    private val binding by lazy { BannerInListActivityBinding.inflate(layoutInflater) }
+    private val binding by lazy { AdInListActivityBinding.inflate(layoutInflater) }
 
     // Definition of the SASBannerView
     private val bannerView by lazy { SASBannerView(this) }
@@ -46,10 +50,10 @@ class BannerInListActivity : AppCompatActivity(), SASBannerView.BannerListener  
 
             return if (viewType == viewTypeAd) {
                 // Create banner view holder
-                BannerViewHolder(ListBannerHolderBinding.inflate(inflater, parent, false))
+                AdViewHolder(ListAdHolderBinding.inflate(inflater, parent, false))
             } else {
                 // Create content view holder
-                ListItemViewHolder(ListItemBinding.inflate(inflater, parent, false))
+                ListItemViewHolder(ListItemBinding.inflate(inflater, parent, false), R.string.activity_banner_in_list_header_instructions)
             }
         }
 
@@ -58,27 +62,28 @@ class BannerInListActivity : AppCompatActivity(), SASBannerView.BannerListener  
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             if (holder is ListItemViewHolder) {
                 holder.setIndex(position)
-            } else if (holder is BannerViewHolder) {
-                holder.binding.bannerContainer.addView(bannerView)
+            } else if (holder is AdViewHolder) {
+                holder.binding.adContainer.addView(bannerView)
             }
         }
 
         override fun onViewRecycled(holder: ViewHolder) {
             super.onViewRecycled(holder)
-            if (holder is BannerViewHolder) {
-                holder.binding.bannerContainer.removeView(bannerView)
+            if (holder is AdViewHolder) {
+                holder.binding.adContainer.removeView(bannerView)
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(binding.root)
 
         // Setup swipe to refresh
-        binding.root.setOnRefreshListener {
+        binding.swipeRefresh.setOnRefreshListener {
             loadBanner()
-            binding.root.isRefreshing = false
+            binding.swipeRefresh.isRefreshing = false
         }
 
         // Setup recyclerview
@@ -115,23 +120,24 @@ class BannerInListActivity : AppCompatActivity(), SASBannerView.BannerListener  
     private fun loadBanner() {
         // Create the ad placement
         val adPlacement = SASAdPlacement(
-            Constants.Placements.BannerInList.SITE_ID,
-            Constants.Placements.BannerInList.PAGE_ID,
-            Constants.Placements.BannerInList.FORMAT_ID,
-            Constants.Placements.BannerInList.KEYWORD_TARGETING_STRING
+            Constants.Placements.Banner.SITE_ID,
+            Constants.Placements.Banner.PAGE_ID,
+            Constants.Placements.Banner.FORMAT_ID,
+            Constants.Placements.Banner.KEYWORD_TARGETING_STRING
         )
 
         // You can also use a test placement during development (a placement that will always
         // deliver an ad from a chosen format).
 
-        // You can test other parallax placements by using
-        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_PARALLAX_HTML
-        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_PARALLAX_VIDEO
-
-        // Or any other banner format test placements:
         // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_HTML
         // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_MRAID_EXPAND
         // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_VIDEO
+
+        // Note that, starting with the Equativ Display SDK 8.3.0, you can also load native-ad insertions
+        // through the SASBannerView. Try it by using our native-ad test placements:
+
+        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_NATIVE_AD_ICON
+        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_NATIVE_AD_ICON_AND_COVER
 
         // If you are an inventory reseller, you must provide a Supply Chain Object.
         // More info here: https://help.smartadserver.com/s/article/Sellers-json-and-SupplyChain-Object
@@ -146,7 +152,12 @@ class BannerInListActivity : AppCompatActivity(), SASBannerView.BannerListener  
         // aspect ratio in this case. We recommend '320/50' for a standard banner.
         val aspectRatio = currentBannerAspectRatio ?: (350.0 / 50.0)
 
-        val height = if (aspectRatio != 0.0) {
+        // Note: If the SASAdInfo.aspectRatio stored in currentBanerAspectRatio is -1, that means we
+        // recommend you to use the WRAP_CONTENT facilities of Android.
+
+        val height = if (aspectRatio < 0.0) {
+            LayoutParams.WRAP_CONTENT
+        } else if (aspectRatio > 0.0) {
             (resources.displayMetrics.widthPixels / aspectRatio).toInt()
         } else {
             0

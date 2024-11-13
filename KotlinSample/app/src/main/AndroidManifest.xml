@@ -37,6 +37,12 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_interstitial_title"
             android:theme="@style/Theme.KotlinSample" />
+
+        <activity android:name=".NativeAdInListActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/activity_native_ad_in_list_title"
+            android:theme="@style/Theme.KotlinSample" />
+
     </application>
 
 </manifest>

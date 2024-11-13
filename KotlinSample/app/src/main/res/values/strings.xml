@@ -9,6 +9,7 @@
         <item>Banner</item>
         <item>Banner in list</item>
         <item>Interstitial</item>
+        <item>Native ad in list</item>
     </string-array>
     <string name="activity_main_headerText">CHOOSE A SAMPLE:</string>
     <string name="activity_main_footerText">This sample demonstrates how to implement the Equativ Display SDK in Android applications.</string>
@@ -21,13 +22,18 @@
     <!-- Banner in list Activity -->
     <string name="activity_banner_in_list_title">Banner in list integration</string>
     <string name="activity_banner_in_list_header_title">↓ SCROLL TO SEE THE AD ↓</string>
-    <string name="activity_banner_in_list_header_instructions">Banner integration in RecyclerView. See implementation in BannerActivity.</string>
+    <string name="activity_banner_in_list_header_instructions">Banner integration in RecyclerView. See implementation in BannerInListActivity.</string>
 
     <!-- Interstitial Activity -->
     <string name="activity_interstitial_title">Interstitial integration</string>
     <string name="activity_interstitial_load_btn">Load interstitial</string>
     <string name="activity_interstitial_show_btn">Show interstitial</string>
     <string name="activity_interstitial_instructions">Simple interstitial integration. Click the load button to load an interstitial ad, then click the show button to display it. See implementation in InterstitialActivity.</string>
+
+    <!-- Native ad in list Activity -->
+    <string name="activity_native_ad_in_list_title">Native ad in list integration</string>
+    <string name="activity_native_ad_in_list_header_title">↓ SCROLL TO SEE THE AD ↓</string>
+    <string name="activity_native_ad_in_list_header_instructions">Native ad integration in RecyclerView. See implementation in NativeAdInListActivity.</string>
 
     <!-- Content filler -->
     <string name="lorem_ipsum_title">Lorem ipsum dolor sit amet</string>

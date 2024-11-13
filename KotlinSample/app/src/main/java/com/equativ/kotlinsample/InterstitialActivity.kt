@@ -2,6 +2,7 @@ package com.equativ.kotlinsample
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.equativ.displaysdk.ad.interstitial.SASInterstitialManager
 import com.equativ.displaysdk.exception.SASException
@@ -46,6 +47,7 @@ class InterstitialActivity : AppCompatActivity(), SASInterstitialManager.Interst
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(binding.root)
 
         updateUI()
