@@ -27,6 +27,12 @@
             android:theme="@style/Theme.KotlinSample" />
 
         <activity
+            android:name=".BiddingBannerActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/activity_bidding_banner_title"
+            android:theme="@style/Theme.KotlinSample" />
+
+        <activity
             android:name=".BannerInListActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_banner_in_list_title"
@@ -36,6 +42,12 @@
             android:name=".InterstitialActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/activity_interstitial_title"
+            android:theme="@style/Theme.KotlinSample" />
+
+        <activity
+            android:name=".BiddingInterstitialActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/activity_bidding_interstitial_title"
             android:theme="@style/Theme.KotlinSample" />
 
         <activity android:name=".NativeAdInListActivity"

@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
+import com.equativ.displaysdk.model.digitalserviceact.SASDigitalServiceActConfig
+import com.equativ.displaysdk.model.digitalserviceact.SASDigitalServiceActConfigDSARequired
+import com.equativ.displaysdk.model.digitalserviceact.SASDigitalServiceActConfigDataToPub
+import com.equativ.displaysdk.model.digitalserviceact.SASDigitalServiceActConfigTransparency
 import com.equativ.displaysdk.util.SASConfiguration
 import com.equativ.kotlinsample.databinding.ActivityMainBinding
 
@@ -33,6 +37,20 @@ class MainActivity : AppCompatActivity() {
         //
         // If you deploy your app in a country implementing one of these privacy laws, remember to install and setup
         // an IAB compliant CMP!
+
+        // -----------------------------------------------
+        // Digital Service Act (DSA)
+        // -----------------------------------------------
+
+        // The SDK is able to handle Digital Service Act. You will find more information about it in our documentation.
+        //
+        // Here is an example of how to set up your DSA configuration for the Equativ Display SDK.
+        //
+        // SASConfiguration.digitalServiceActConfig = SASDigitalServiceActConfig(
+        //     SASDigitalServiceActConfigDSARequired.REQUIRED,
+        //     SASDigitalServiceActConfigDataToPub.OPTIONAL_TO_SEND_TRANSPARENCY_DATA,
+        //     listOf(SASDigitalServiceActConfigTransparency("https://domain.com", listOf(1, 2)))
+        // )
     }
 
     private fun setupUI() {
@@ -57,9 +75,11 @@ class MainActivity : AppCompatActivity() {
         binding.listView.setOnItemClickListener { _, _, index, _ ->
             when (index) {
                 1 -> BannerActivity::class
-                2 -> BannerInListActivity::class
-                3 -> InterstitialActivity::class
-                4 -> NativeAdInListActivity::class
+                2 -> BiddingBannerActivity::class
+                3 -> BannerInListActivity::class
+                4 -> InterstitialActivity::class
+                5 -> BiddingInterstitialActivity::class
+                6 -> NativeAdInListActivity::class
                 else -> null
             }?.let { activityClass ->
                 val intent = Intent(this, activityClass.java)

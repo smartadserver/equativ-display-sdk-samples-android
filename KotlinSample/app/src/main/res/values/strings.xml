@@ -7,8 +7,10 @@
     <string name="title_activity_main_short">SAS Sample</string>
     <string-array name="activity_main_implementations_array">
         <item>Banner</item>
+        <item>Banner using Inapp Bidding</item>
         <item>Banner in list</item>
         <item>Interstitial</item>
+        <item>Interstitial using Inapp Bidding</item>
         <item>Native ad in list</item>
     </string-array>
     <string name="activity_main_headerText">CHOOSE A SAMPLE:</string>
@@ -18,6 +20,13 @@
     <string name="activity_banner_title">Banner integration</string>
     <string name="activity_banner_refresh_btn">Reload banner</string>
     <string name="activity_banner_instructions">Simple banner integration. See implementation in BannerActivity.</string>
+
+    <!-- InApp Bidding Banner Activity -->
+    <string name="activity_bidding_banner_title">Banner integration using Inapp Bidding</string>
+    <string name="activity_bidding_banner_instructions">Simple bidding banner integration. Click on the \'Load Banner Bidding Ad\' button to load a banner bidding ad,
+        then click on the \'Render Banner Bidding Ad\' button to load the received bidding ad in the above banner view. See implementation in BannerBiddingActivity.</string>
+    <string name="activity_bidding_banner_load">Load Banner Bidding Ad</string>
+    <string name="activity_bidding_banner_render">Render Banner Bidding Ad</string>
 
     <!-- Banner in list Activity -->
     <string name="activity_banner_in_list_title">Banner in list integration</string>
@@ -29,6 +38,13 @@
     <string name="activity_interstitial_load_btn">Load interstitial</string>
     <string name="activity_interstitial_show_btn">Show interstitial</string>
     <string name="activity_interstitial_instructions">Simple interstitial integration. Click the load button to load an interstitial ad, then click the show button to display it. See implementation in InterstitialActivity.</string>
+
+    <!-- InApp Bidding Banner Activity -->
+    <string name="activity_bidding_interstitial_title">Banner integration using Inapp Bidding</string>
+    <string name="activity_bidding_interstitial_instructions">Simple bidding interstitial integration. Click on the \'Load and render Interstitial Bidding Ad\' button to load an interstitial bidding ad and render it in a SASInterstitialManager,
+        then click on the \'Show Interstitial Bidding Ad\' button to show the rendered interstitial ad. See implementation in BannerBiddingActivity.</string>
+    <string name="activity_bidding_interstitial_load_and_render">Load and render \n Interstitial Bidding Ad</string>
+    <string name="activity_bidding_interstitial_show">Show Interstitial Bidding Ad</string>
 
     <!-- Native ad in list Activity -->
     <string name="activity_native_ad_in_list_title">Native ad in list integration</string>

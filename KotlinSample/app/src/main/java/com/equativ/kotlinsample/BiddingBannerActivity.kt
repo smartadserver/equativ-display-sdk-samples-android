@@ -7,20 +7,41 @@ import android.view.ViewGroup.LayoutParams
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.equativ.displaysdk.ad.banner.SASBannerView
+import com.equativ.displaysdk.bidding.SASBiddingAdFormatType
+import com.equativ.displaysdk.bidding.SASBiddingAdResponse
+import com.equativ.displaysdk.bidding.SASBiddingCurrency
+import com.equativ.displaysdk.bidding.SASBiddingManager
 import com.equativ.displaysdk.exception.SASException
 import com.equativ.displaysdk.model.SASAdInfo
 import com.equativ.displaysdk.model.SASAdPlacement
-import com.equativ.kotlinsample.databinding.BannerActivityBinding
+import com.equativ.kotlinsample.databinding.BiddingBannerActivityBinding
 
 /**
- * The purpose of this Activity is to display a simple banner.
+ * The purpose of this Activity is to display a simple banner that renders a SASBiddingAdResponse
+ * received through a SASBiddingManager instance
  *
  * The banner will be resized programmatically depending on the aspect ratio of the ad loaded.
  */
-class BannerActivity : AppCompatActivity(), SASBannerView.BannerListener {
+class BiddingBannerActivity : AppCompatActivity(), SASBannerView.BannerListener, SASBiddingManager.BiddingManagerListener {
 
-    private val binding by lazy { BannerActivityBinding.inflate(layoutInflater) }
+    private val binding by lazy { BiddingBannerActivityBinding.inflate(layoutInflater) }
     private val bannerView by lazy { binding.bannerView }
+
+    // Manager object that will handle all bidding ad calls.
+    private val biddingManager by lazy {
+
+        // Create the bidding manager with appropriate Context, SASAdPlacement, Format Type, Currency and Listener
+        SASBiddingManager(
+            this,
+            SASAdPlacement.TEST_PLACEMENT_INAPP_BIDDING_BANNER,
+            SASBiddingAdFormatType.BANNER,
+            SASBiddingCurrency.USD,
+        ).apply { biddingManagerListener = this@BiddingBannerActivity }
+    }
+
+    private var isBiddingManagerLoading = false
+
+    private var biddingAdResponse: SASBiddingAdResponse? = null
 
     private var currentBannerAspectRatio: Double? = null
 
@@ -30,20 +51,36 @@ class BannerActivity : AppCompatActivity(), SASBannerView.BannerListener {
         setContentView(binding.root)
 
         // Setup load button
-        binding.reloadButton.setOnClickListener {
-            loadBanner()
+        binding.loadBiddingAdButton.setOnClickListener {
+            loadBiddingAd()
         }
 
+        // Setup render button
+        binding.renderBiddingAdButton.setOnClickListener {
+            // Once a banner bidding ad is loaded, render it into the SASBannerView
+            biddingAdResponse?.let { bannerView.loadAd(it) }
+
+        }
 
         // Set the banner listener to the SASBannerView
         bannerView.bannerListener = this
 
-        loadBanner()
+        updateUI()
+
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         updateBannerHeight()
+    }
+
+    private fun loadBiddingAd() {
+        if (!isBiddingManagerLoading) {
+            isBiddingManagerLoading = true
+
+            biddingManager.loadAd()
+            updateUI()
+        }
     }
 
     override fun onDestroy() {
@@ -52,36 +89,6 @@ class BannerActivity : AppCompatActivity(), SASBannerView.BannerListener {
         // Once you are done using your SASBannerView instance, make sure to call
         // `onDestroy` to let it release its resources.
         bannerView.onDestroy()
-    }
-
-    private fun loadBanner() {
-        // Create the ad placement
-        val adPlacement = SASAdPlacement(
-            Constants.Placements.Banner.SITE_ID,
-            Constants.Placements.Banner.PAGE_ID,
-            Constants.Placements.Banner.FORMAT_ID,
-            Constants.Placements.Banner.KEYWORD_TARGETING_STRING
-        )
-
-        // You can also use a test placement during development (a placement that will always
-        // deliver an ad from a chosen format).
-
-        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_HTML
-        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_MRAID_EXPAND
-        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_BANNER_VIDEO
-
-        // Note that, starting with the Equativ Display SDK 8.3.0, you can also load native-ad insertions
-        // through the SASBannerView. Try it by using our native-ad test placements:
-
-        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_NATIVE_AD_ICON
-        // val adPlacement = SASAdPlacement.TEST_PLACEMENT_NATIVE_AD_ICON_AND_COVER
-
-        // If you are an inventory reseller, you must provide a Supply Chain Object.
-        // More info here: https://help.smartadserver.com/s/article/Sellers-json-and-SupplyChain-Object
-        // adPlacement.supplyChainObjectString = "1.0,1!exchange1.com,1234,1,publisher,publisher.com"
-
-        // Load the placement in the banner using the `loadAd` method.
-        bannerView.loadAd(adPlacement)
     }
 
     private fun updateBannerHeight() {
@@ -158,7 +165,46 @@ class BannerActivity : AppCompatActivity(), SASBannerView.BannerListener {
     }
 
     companion object {
-        private const val TAG = "BannerActivity"
+        private const val TAG = "BiddingBannerActivity"
+    }
+
+    override fun onBiddingManagerAdFailedToLoad(e: SASException) {
+        isBiddingManagerLoading = false
+        this.biddingAdResponse = null
+
+        Log.i("Sample", "Fail to load a bidding ad response: ${e.message}")
+        updateUI()
+    }
+
+    override fun onBiddingManagerAdLoaded(biddingAdResponse: SASBiddingAdResponse) {
+        isBiddingManagerLoading = false
+        this.biddingAdResponse = biddingAdResponse
+
+        // A bidding ad response has been received.
+        // You can now load it into an ad view or discard it. See showBiddingAd() for more info.
+
+        Log.i("Sample", "A bidding ad response has been loaded: $biddingAdResponse.")
+        updateUI()
+    }
+
+    // A bidding ad response is valid only if it has not been consumed already.
+    private fun hasValidBiddingAdResponse() = biddingAdResponse?.isConsumed == false
+
+    private fun updateUI() {
+        bannerView.post {
+            // Buttons
+            binding.loadBiddingAdButton.isEnabled = !isBiddingManagerLoading
+            binding.renderBiddingAdButton.isEnabled = hasValidBiddingAdResponse()
+
+            // Status textview
+            binding.statusTextView.text = when {
+                isBiddingManagerLoading -> "loading a bidding ad…"
+                biddingAdResponse != null -> biddingAdResponse?.let {
+                    "bidding response: ${it.price.cpm} ${it.price.currency}"
+                }
+                else -> "(no bidding ad response loaded)"
+            }
+        }
     }
 
 }
