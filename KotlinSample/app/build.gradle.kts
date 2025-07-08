@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "com.equativ.kotlinsample"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.equativ.kotlinsample"
         minSdk = 24
-        targetSdk = 35
-        versionCode = 850
-        versionName = "8.5.0"
+        targetSdk = 36
+        versionCode = 851
+        versionName = "8.5.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -24,11 +24,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_9
+        targetCompatibility = JavaVersion.VERSION_1_9
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "9"
     }
 
     buildFeatures {
@@ -38,13 +38,13 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.core:core-ktx:1.16.0")
+    implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.12.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-beta01")
 
     // sdk8 main dependency
-    implementation("com.equativ.android:equativ-display-sdk:8.5.0")
+    implementation("com.equativ.android:equativ-display-sdk:8.5.1")
 
 }
