@@ -42,7 +42,7 @@ class InterstitialActivity : AppCompatActivity(), SASInterstitialManager.Interst
         // adPlacement.supplyChainObjectString = "1.0,1!exchange1.com,1234,1,publisher,publisher.com"
 
         // Creation of the SASInterstitialManager. It is initialized with the previously created ad placement.
-        SASInterstitialManager(this, adPlacement)
+        SASInterstitialManager(context = this, adPlacement)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

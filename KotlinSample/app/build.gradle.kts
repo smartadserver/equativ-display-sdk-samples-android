@@ -11,8 +11,8 @@ android {
         applicationId = "com.equativ.kotlinsample"
         minSdk = 24
         targetSdk = 36
-        versionCode = 854
-        versionName = "8.5.4"
+        versionCode = 855
+        versionName = "8.5.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,6 +45,6 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-beta01")
 
     // sdk8 main dependency
-    implementation("com.equativ.android:equativ-display-sdk:8.5.4")
+    implementation("com.equativ.android:equativ-display-sdk:8.5.5")
 
 }

@@ -143,7 +143,7 @@ class BiddingInterstitialActivity : AppCompatActivity(),
         this.biddingAdResponse = biddingAdResponse
 
         // A bidding ad response has been received, try to render it in an interstitial manager
-        interstitialManager = SASInterstitialManager(this, biddingAdResponse).apply {
+        interstitialManager = SASInterstitialManager(context = this, biddingAdResponse).apply {
             interstitialManagerListener = this@BiddingInterstitialActivity
             loadAd()
         }
