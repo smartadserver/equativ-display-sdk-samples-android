@@ -45,6 +45,6 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-beta01")
 
     // sdk8 main dependency
-    implementation("com.equativ.android:equativ-display-sdk:8.5.5")
+    implementation("com.equativ.android:equativ-display-sdk:8.6.0")
 
 }
