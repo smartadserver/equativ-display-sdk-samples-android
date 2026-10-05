@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.equativ.kotlinsample"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.equativ.kotlinsample"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 855
         versionName = "8.5.5"
 
@@ -45,6 +45,6 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-beta01")
 
     // sdk8 main dependency
-    implementation("com.equativ.android:equativ-display-sdk:8.6.1")
+    implementation("com.equativ.android:equativ-display-sdk:8.6.2")
 
 }
